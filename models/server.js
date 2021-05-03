@@ -10,6 +10,7 @@ class Server {
         //rutas para modelos
         
         this.authPath = '/api/auth/login'
+        this.busquedaPath = '/api/busqueda'
         this.autorPath = '/api/autores'
         this.categoriaPath = '/api/categorias'
         this.detallePrestamoPath = '/api/detalle-prestamos'
@@ -43,6 +44,7 @@ class Server {
     
     routers() {
         this.app.use(this.authPath, require('../routers/auth.router'))
+        this.app.use(this.busquedaPath, require('../routers/busqueda.router'))
         this.app.use(this.autorPath, require('../routers/autor.router'))
         this.app.use(this.categoriaPath, require('../routers/categoria.router'))
         this.app.use(this.detallePrestamoPath, require('../routers/detalle-prestamo.router'))

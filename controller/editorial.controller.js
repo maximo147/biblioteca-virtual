@@ -1,8 +1,10 @@
+const Editorial = require('../models/editorial')
 
-const obtenerObjetos = (req, res) => {
+const obtenerObjetos = async (req, res) => {
     try {
+        const editoriales = await Editorial.find({ estado: true })
         res.json({
-            message: 'Todo OK'
+            editoriales
         })
     } catch (error) {
         console.log(error)
@@ -12,10 +14,12 @@ const obtenerObjetos = (req, res) => {
     }
 }
 
-const obtenerObjeto = (req, res) => {
+const obtenerObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const editorial = await Editorial.findById(id)
         res.json({
-            message: 'Todo OK'
+            editorial
         })
     } catch (error) {
         console.log(error)
@@ -25,10 +29,13 @@ const obtenerObjeto = (req, res) => {
     }
 }
 
-const crearObjeto = (req, res) => {
+const crearObjeto = async (req, res) => {
     try {
+        const { nombre, descripcion } = req.body
+        const editorial = new Editorial({ nombre, descripcion })
+        editorial.save()
         res.json({
-            message: 'Todo OK'
+            message: 'La editorial se ha creado existosamente'
         })
     } catch (error) {
         console.log(error)
@@ -38,10 +45,13 @@ const crearObjeto = (req, res) => {
     }
 }
 
-const modificarObjeto = (req, res) => {
+const modificarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const { nombre, descripcion } = req.body
+        await Editorial.findByIdAndUpdate(id, { nombre, descripcion })
         res.json({
-            message: 'Todo OK'
+            message: 'La editorial se ha actualizado existosamente'
         })
     } catch (error) {
         console.log(error)
@@ -51,10 +61,12 @@ const modificarObjeto = (req, res) => {
     }
 }
 
-const eliminarObjeto = (req, res) => {
+const eliminarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        await Editorial.findByIdAndUpdate(id, { estado: false })
         res.json({
-            message: 'Todo OK'
+            message: 'La editorial se ha eliminado existosamente'
         })
     } catch (error) {
         console.log(error)

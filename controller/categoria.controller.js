@@ -1,8 +1,10 @@
+const Categoria = require('../models/categoria')
 
-const obtenerObjetos = (req, res) => {
+const obtenerObjetos = async (req, res) => {
     try {
+        const categorias = await Categoria.find({ estado: true })
         res.json({
-            message: 'Todo OK - c'
+            categorias
         })
     } catch (error) {
         console.log(error)
@@ -12,10 +14,12 @@ const obtenerObjetos = (req, res) => {
     }
 }
 
-const obtenerObjeto = (req, res) => {
+const obtenerObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const categoria = await Categoria.findById(id)
         res.json({
-            message: 'Todo OK'
+            categoria
         })
     } catch (error) {
         console.log(error)
@@ -25,10 +29,29 @@ const obtenerObjeto = (req, res) => {
     }
 }
 
-const crearObjeto = (req, res) => {
+const crearObjeto = async (req, res) => {
     try {
+        const { nombre, descripcion } = req.body
+        const categoria = new Categoria({ nombre, descripcion })
+        await categoria.save()
         res.json({
-            message: 'Todo OK'
+            message: 'La categoría se ha creado existosamente'
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'La categoria se ha creado existosamente'
+        })
+    }
+}
+
+const modificarObjeto = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { nombre, descripcion } = req.body
+        await Categoria.findByIdAndUpdate(id, { nombre, descripcion })
+        res.json({
+            message: 'La categoría se ha actualizado existosamente'
         })
     } catch (error) {
         console.log(error)
@@ -38,23 +61,12 @@ const crearObjeto = (req, res) => {
     }
 }
 
-const modificarObjeto = (req, res) => {
+const eliminarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        await Categoria.findByIdAndUpdate(id, { estado: false })
         res.json({
-            message: 'Todo OK'
-        })
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            message: 'Hable con el administrador'
-        })
-    }
-}
-
-const eliminarObjeto = (req, res) => {
-    try {
-        res.json({
-            message: 'Todo OK'
+            message: 'La categoría se ha eliminado existosamente'
         })
     } catch (error) {
         console.log(error)

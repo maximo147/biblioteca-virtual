@@ -1,8 +1,16 @@
+const Libro = require('../models/libro')
 
-const obtenerObjetos = (req, res) => {
+const obtenerObjetos = async (req, res) => {
     try {
+        const {title} = req.body
+
+        const libros = await Libro.find({ titulo: { $regex: `.*${title}.*` } })
+            .populate('editorial', 'nombre')
+            .populate('categoria', 'nombre')
+            .populate('autor', 'nombre')
+
         res.json({
-            message: 'Todo OK'
+            libros
         })
     } catch (error) {
         console.log(error)
@@ -12,10 +20,15 @@ const obtenerObjetos = (req, res) => {
     }
 }
 
-const obtenerObjeto = (req, res) => {
+const obtenerObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const libro = await Libro.findById(id)
+            .populate('editorial', 'nombre')
+            .populate('categoria', 'nombre')
+            .populate('autor', 'nombre')
         res.json({
-            message: 'Todo OK'
+            libro
         })
     } catch (error) {
         console.log(error)
@@ -25,10 +38,21 @@ const obtenerObjeto = (req, res) => {
     }
 }
 
-const crearObjeto = (req, res) => {
+const crearObjeto = async (req, res) => {
     try {
+        const titulo = req.body.titulo.toUpperCase()
+        const { img, isbn, idioma,
+            anioPublicaion, descripcion, precio,
+            descuento, autor, categoria, editorial } = req.body
+        const libro = new Libro({
+            titulo, img, isbn, idioma,
+            anioPublicaion, descripcion, precio,
+            descuento, autor, categoria, editorial
+        })
+
+        await libro.save()
         res.json({
-            message: 'Todo OK'
+            message: 'El libro se ha creado exitosamente'
         })
     } catch (error) {
         console.log(error)
@@ -38,10 +62,20 @@ const crearObjeto = (req, res) => {
     }
 }
 
-const modificarObjeto = (req, res) => {
+const modificarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const { titulo, img, isbn, idioma,
+            anioPublicaion, descripcion, precio,
+            descuento, autor, categoria, editorial } = req.body
+        await Libro.findByIdAndUpdate(id, {
+            titulo, img, isbn, idioma,
+            anioPublicaion, descripcion, precio,
+            descuento, autor, categoria, editorial
+        })
+
         res.json({
-            message: 'Todo OK'
+            message: 'El libro se actualizó exitosamente'
         })
     } catch (error) {
         console.log(error)
@@ -51,10 +85,12 @@ const modificarObjeto = (req, res) => {
     }
 }
 
-const eliminarObjeto = (req, res) => {
+const eliminarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        await Libro.findByIdAndUpdate(id, { estado: false })
         res.json({
-            message: 'Todo OK'
+            message: 'El libro se eliminó exitosamente'
         })
     } catch (error) {
         console.log(error)

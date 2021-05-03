@@ -1,8 +1,11 @@
+const Usuario = require('../models/usuario')
+const bcryptjs = require('bcryptjs')
 
-const obtenerObjetos = (req, res) => {
+const obtenerObjetos = async (req, res) => {
     try {
+        const usuarios = await Usuario.find({ estado: true })
         res.json({
-            message: 'Todo OK'
+            usuarios
         })
     } catch (error) {
         console.log(error)
@@ -12,10 +15,12 @@ const obtenerObjetos = (req, res) => {
     }
 }
 
-const obtenerObjeto = (req, res) => {
+const obtenerObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const usuario = await Usuario.findById(id)
         res.json({
-            message: 'Todo OK'
+            usuario
         })
     } catch (error) {
         console.log(error)
@@ -25,10 +30,16 @@ const obtenerObjeto = (req, res) => {
     }
 }
 
-const crearObjeto = (req, res) => {
+const crearObjeto = async (req, res) => {
     try {
+        const { nombreUsuario, correo, nombres,
+            password, telefono, rol } = req.body
+        const usuario = new Usuario({ nombreUsuario, correo, nombres, password, telefono, rol })
+        var salt = bcryptjs.genSaltSync(10);
+        usuario.password = bcryptjs.hashSync(password, salt);
+        await usuario.save()
         res.json({
-            message: 'Todo OK'
+            message: 'El usuario se ha creado exitosamente'
         })
     } catch (error) {
         console.log(error)
@@ -38,10 +49,18 @@ const crearObjeto = (req, res) => {
     }
 }
 
-const modificarObjeto = (req, res) => {
+const modificarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        const { nombreUsuario, correo, nombres,
+            password, telefono } = req.body
+
+        const salt = bcryptjs.genSaltSync(10);
+        const password2 = bcryptjs.hashSync(password, salt);
+
+        await Usuario.findByIdAndUpdate(id, { nombreUsuario, correo, nombres, telefono })
         res.json({
-            message: 'Todo OK'
+            message: 'El usuario se modificó exitosamente'
         })
     } catch (error) {
         console.log(error)
@@ -51,10 +70,12 @@ const modificarObjeto = (req, res) => {
     }
 }
 
-const eliminarObjeto = (req, res) => {
+const eliminarObjeto = async (req, res) => {
     try {
+        const { id } = req.params
+        await Usuario.findByIdAndUpdate(id, { estado: false })
         res.json({
-            message: 'Todo OK'
+            message: 'El usuario se eliminó exitosamente'
         })
     } catch (error) {
         console.log(error)

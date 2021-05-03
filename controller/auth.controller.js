@@ -9,7 +9,7 @@ const authGET = (req, res) => {
 
 const authPOST = async (req, res) => {
     try {
-        const { correo, password, rol } = req.body
+        const { correo, password  } = req.body
         const usuario = await Usuario.findOne({ correo })
         if(!usuario){
             return res.status(400).json({
@@ -24,16 +24,16 @@ const authPOST = async (req, res) => {
             })
         }
 
-        if(usuario.rol !== rol){
-            return res.status(400).json({
-                message: 'El rol no es correo'
-            })
-        }
+        // if(usuario.rol !== rol){
+        //     return res.status(400).json({
+        //         message: 'El rol no es correo'
+        //     })
+        // }
 
 
         const { nombreUsuario } = usuario
         res.json({
-            correo, nombreUsuario, rol
+            correo, nombreUsuario
         })        
     } catch (error) {
         console.log(error)

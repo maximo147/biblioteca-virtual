@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const AutorSchema = new Schema({
-    nombre: { type: String, required: [true, 'El nombre es obligatorio'] },
+    nombre: { type: String, required: [true, 'El nombre es obligatorio'], unique: true },
     pais: { type: String, default: 'Perú' },
     estado: { type: Boolean, default: true }
 })
