@@ -27,9 +27,7 @@ const obtenerObjeto = async (req, res) => {
             .populate('editorial', 'nombre')
             .populate('categoria', 'nombre')
             .populate('autor', 'nombre')
-        res.json({
-            libro
-        })
+        res.json(libro)
     } catch (error) {
         console.log(error)
         res.status(500).json({

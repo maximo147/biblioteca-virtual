@@ -57,7 +57,8 @@ const buscarLibro = async (termino, res) => {
                 // { anioPublicion: regex }
                 ],
             $and: [{ estado: true }]
-        })
+        }).populate('autor', 'nombre')
+        .populate('categoria', 'nombre')
 
         const results1 = (libros) ? [libros] : []
         res.status(200).json(results1)        
