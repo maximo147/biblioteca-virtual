@@ -23,6 +23,7 @@ class Server {
         this.prestamoPath = '/api/prestamos'
         this.usuarioPath = '/api/usuarios'
         this.ventaPath = '/api/ventas'
+        
         this.checkoutPath = '/api/checkout'
         
         //database
