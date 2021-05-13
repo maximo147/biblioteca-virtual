@@ -41,6 +41,10 @@ const buscarLibro = async (termino, res) => {
         const isMongoId = ObjectId.isValid(termino)
         if(isMongoId){
             const libro = await Libro.findById(termino)
+                .populate('autor', 'nombre')
+                .populate('categoria', 'nombre')
+
+
             const results =  (libro) ? [libro] : []
             return res.status(200).json(
                 results

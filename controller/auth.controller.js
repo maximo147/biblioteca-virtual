@@ -30,10 +30,11 @@ const authPOST = async (req, res) => {
         //     })
         // }
 
+        req.body = usuario
 
-        const { nombreUsuario } = usuario
+        const { nombreUsuario, _id } = usuario
         res.json({
-            correo, nombreUsuario
+            _id, correo, nombreUsuario
         })        
     } catch (error) {
         console.log(error)

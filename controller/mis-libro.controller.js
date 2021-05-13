@@ -1,5 +1,6 @@
+const Mislibro = require('../models/mis-libros')
 
-const obtenerObjetos = (req, res) => {
+const obtenerObjetos = async (req, res) => {
     try {
         res.json({
             message: 'Todo OK'
@@ -12,7 +13,41 @@ const obtenerObjetos = (req, res) => {
     }
 }
 
-const obtenerObjeto = (req, res) => {
+const obtenerObjeto = async (req, res) => {
+    try {
+        const { id } = req.params
+        const mislibros = await Mislibro.find({ usuario: id })
+            .populate('libro', 'titulo')
+            .populate('usuario', 'nombre')
+        res.json({
+            id,
+            mislibros
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'Hable con el administrador'
+        })
+    }
+}
+
+const crearObjeto = async (req, res) => {
+    const {libro, usuario, estadoLibro} = req.body
+    const mislibros = new Mislibro({libro, usuario, estadoLibro})
+    mislibros.save()
+    try {
+        res.json({
+            message: 'Mi Libro añadido'
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'Hable con el administrador'
+        })
+    }
+}
+
+const modificarObjeto = async (req, res) => {
     try {
         res.json({
             message: 'Todo OK'
@@ -25,33 +60,7 @@ const obtenerObjeto = (req, res) => {
     }
 }
 
-const crearObjeto = (req, res) => {
-    try {
-        res.json({
-            message: 'Todo OK'
-        })
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            message: 'Hable con el administrador'
-        })
-    }
-}
-
-const modificarObjeto = (req, res) => {
-    try {
-        res.json({
-            message: 'Todo OK'
-        })
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            message: 'Hable con el administrador'
-        })
-    }
-}
-
-const eliminarObjeto = (req, res) => {
+const eliminarObjeto = async (req, res) => {
     try {
         res.json({
             message: 'Todo OK'

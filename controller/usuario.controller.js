@@ -38,8 +38,9 @@ const crearObjeto = async (req, res) => {
         var salt = bcryptjs.genSaltSync(10);
         usuario.password = bcryptjs.hashSync(password, salt);
         await usuario.save()
+        const { _id } = usuario
         res.json({
-            message: 'El usuario se ha creado exitosamente'
+            _id, nombreUsuario, correo
         })
     } catch (error) {
         console.log(error)

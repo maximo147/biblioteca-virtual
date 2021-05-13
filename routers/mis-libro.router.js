@@ -14,7 +14,9 @@ router.get('/:id', [
     validarCampos
 ], obtenerObjeto)
 
-router.post('/', crearObjeto)
+router.post('/', [
+    
+], crearObjeto)
 
 router.put('/:id', [
     check('id', 'El id no es válido').isMongoId(),

@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const connectDB = require('../database/config')
+const bodyParser = require('body-parser');
 
 
 class Server {
@@ -22,6 +23,7 @@ class Server {
         this.prestamoPath = '/api/prestamos'
         this.usuarioPath = '/api/usuarios'
         this.ventaPath = '/api/ventas'
+        this.checkoutPath = '/api/checkout'
         
         //database
         this.databaseConnect()
@@ -40,6 +42,8 @@ class Server {
         this.app.use(cors())
         this.app.use(express.json())
         this.app.use(express.static('public'))
+        //middlewares para mercado pago
+        this.app.use(bodyParser.urlencoded({ extended: false }))
     }
     
     routers() {
@@ -56,6 +60,7 @@ class Server {
         this.app.use(this.prestamoPath, require('../routers/prestamo.router'))
         this.app.use(this.usuarioPath, require('../routers/usuario.router'))
         this.app.use(this.ventaPath, require('../routers/venta.router'))
+        this.app.use(this.checkoutPath, require('../routers/checkout.router'))
     }
 
     listen() {
