@@ -24,12 +24,6 @@ const authPOST = async (req, res) => {
             })
         }
 
-        // if(usuario.rol !== rol){
-        //     return res.status(400).json({
-        //         message: 'El rol no es correo'
-        //     })
-        // }
-
         req.body = usuario
 
         const { nombreUsuario, _id } = usuario

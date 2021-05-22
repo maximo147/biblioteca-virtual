@@ -23,6 +23,7 @@ class Server {
         this.prestamoPath = '/api/prestamos'
         this.usuarioPath = '/api/usuarios'
         this.ventaPath = '/api/ventas'
+        this.tarjetaPath = '/api/tarjeta'
         
         this.checkoutPath = '/api/checkout'
         
@@ -62,6 +63,8 @@ class Server {
         this.app.use(this.usuarioPath, require('../routers/usuario.router'))
         this.app.use(this.ventaPath, require('../routers/venta.router'))
         this.app.use(this.checkoutPath, require('../routers/checkout.router'))
+        this.app.use(this.tarjetaPath, require('../routers/tarjeta.router'))
+
     }
 
     listen() {

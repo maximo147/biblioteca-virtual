@@ -40,13 +40,15 @@ const crearObjeto = async (req, res) => {
     try {
         const titulo = req.body.titulo.toUpperCase()
         const { img, isbn, idioma,
-            anioPublicaion, descripcion, precio,
-            descuento, autor, categoria, editorial } = req.body
-        const libro = new Libro({
-            titulo, img, isbn, idioma,
-            anioPublicaion, descripcion, precio,
-            descuento, autor, categoria, editorial
-        })
+            anioPublicaion, descripcion, precioVenta,
+            precioAlquiler, descuentoVenta, descuentoAlquiler, 
+            numeroPaginas, descuento, autor, categoria, 
+            editorial } = req.body
+        const libro = new Libro({ titulo, img, isbn, idioma,
+            anioPublicaion, descripcion, precioVenta,
+            precioAlquiler, descuentoVenta, descuentoAlquiler, 
+            numeroPaginas, descuento, autor, categoria, 
+            editorial })
 
         await libro.save()
         res.json({

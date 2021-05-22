@@ -1,3 +1,4 @@
+const DetalleVenta = require('../models/detalle-venta')
 
 const obtenerObjetos = (req, res) => {
     try {
@@ -27,8 +28,11 @@ const obtenerObjeto = (req, res) => {
 
 const crearObjeto = (req, res) => {
     try {
+        const { venta, libro } = req.body
+        const detalleVenta = new DetalleVenta({ venta, libro })
+        detalleVenta.save()
         res.json({
-            message: 'Todo OK'
+            message: 'Detalle Venta añadido'
         })
     } catch (error) {
         console.log(error)

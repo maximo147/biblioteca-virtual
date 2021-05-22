@@ -14,7 +14,6 @@ router.get('/', obtenerObjetos)
 router.get('/:id', [
     check('id', 'El id no es válido').isMongoId(),
     check('id').custom(existeId),
-
     validarCampos
 ], obtenerObjeto)
 
