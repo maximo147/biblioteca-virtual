@@ -33,7 +33,8 @@ const crearObjeto = (req, res) => {
         const venta = new Venta({ fechaVenta, tipoPago, total, usuario })
         venta.save()
         res.json({
-            message: 'Venta añadida'
+            message: 'Venta añadida',
+            venta
         })
     } catch (error) {
         console.log(error)

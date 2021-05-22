@@ -16,6 +16,7 @@ router.get('/:id', [
 
 router.post('/',[
     check('precioVenta', 'El precio es Obligatorio').not().isEmpty(),
+    check('usuario', 'El id de usuario no es válido').isMongoId(),
 ], crearObjeto)
 
 router.put('/:id', [
