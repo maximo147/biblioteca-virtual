@@ -5,7 +5,6 @@ const LibroSchema = new Schema({
     img: { type: String, required: [true, 'La imagen es obligatoria'], unique: true },
     isbn: { type: String, default: '999-999-999-99', unique: true },
     idioma: { type: String, default: 'Español' },
-    img: { type: String, required: [true, 'La imagen es obligatoria'] },
     anioPublicaion: { type: Number, required: [true, 'La año es obligatorio'] },
     descripcion: { type: String, default: 'Descripción del libro' },
     precioVenta: { type: Number, default: 0 },

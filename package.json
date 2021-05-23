@@ -1,7 +1,7 @@
 {
   "name": "biblioteca-virtual",
   "version": "1.0.0",
-  "description": "biblioteca para red de colegios",
+  "description": "biblioteca",
   "main": "app.js",
   "scripts": {
     "start": "node app"
