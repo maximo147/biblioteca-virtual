@@ -1,5 +1,6 @@
 const bcryptjs = require('bcryptjs')
 const Usuario = require('../models/usuario')
+const { request, response } = require('express')
 
 const authGET = (req, res) => {
     res.json({
@@ -7,21 +8,20 @@ const authGET = (req, res) => {
     })
 }
 
-const authPOST = async (req, res) => {
+const authPOST = async (req, res ) => {
     try {
         const { correo, password  } = req.body
         const usuario = await Usuario.findOne({ correo })
         if(!usuario){
-            return res.status(400).json({
+            return res.status(400).send({
                 message: 'El correo no existe'
             })
+            res.end();
         }
 
         const matchPassword = bcryptjs.compareSync(password, usuario.password )
         if(!matchPassword){
-            return res.status(400).json({
-                message: 'La contraseña no es válida'
-            })
+            return res.status(400).send('La contraseña no es válida')
         }
 
         req.body = usuario

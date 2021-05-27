@@ -45,7 +45,7 @@ class Server {
         this.app.use(express.json())
         this.app.use(express.static('public'))
         //middlewares para mercado pago
-        this.app.use(bodyParser.urlencoded({ extended: false }))
+        // this.app.use(bodyParser.urlencoded({ extended: false }))
     }
     
     routers() {

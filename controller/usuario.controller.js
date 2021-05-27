@@ -40,7 +40,7 @@ const crearObjeto = async (req, res) => {
         await usuario.save()
         const { _id } = usuario
         res.json({
-            _id, nombreUsuario, correo
+            _id, nombreUsuario, correo, rol
         })
     } catch (error) {
         console.log(error)
